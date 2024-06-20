@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "register_users",
+  "info": {
+    "singularName": "register-user",
+    "pluralName": "register-users",
+    "displayName": "RegisterUser"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullname": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "password": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    }
+  }
+}

@@ -20,13 +20,16 @@ export default function AboutScreen({ navigation }) {
       };
 
       // Send a POST request to the registration endpoint
-      const response = await fetch("http://localhost:1337/api/registerusers", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data: registrationData }),
-      });
+      const response = await fetch(
+        "http://192.168.29.24:1337/api/register-users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ data: registrationData }),
+        }
+      );
       console.log(response);
       if (response.ok) {
         // Registration successful, navigate to the login screen

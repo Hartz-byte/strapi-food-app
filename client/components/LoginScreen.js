@@ -9,7 +9,7 @@ export default function LoginScreen({ navigation }) {
   const handleLogin = async () => {
     try {
       // Construct the URL with query parameters
-      const baseUrl = "http://localhost:1337/api/registerusers";
+      const baseUrl = "http://192.168.29.24:1337/api/register-users";
       const queryParams = `?email=${email}&password=${password}`;
       const url = baseUrl + queryParams;
 
@@ -33,8 +33,7 @@ export default function LoginScreen({ navigation }) {
           const password2 = user.attributes.password;
           const info = user.attributes;
 
-          if (email==email2 && password==password2) {
-
+          if (email == email2 && password == password2) {
             const keyValues = [
               ["userId", userId.toString()],
               ["email", email2.toString()],
@@ -45,7 +44,6 @@ export default function LoginScreen({ navigation }) {
             await AsyncStorage.multiSet(keyValues);
             navigation.navigate("Main");
           }
-          
         }
       } else {
       }

@@ -8,12 +8,10 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     try {
-      // Construct the URL with query parameters
       const baseUrl = "http://192.168.29.24:1337/api/register-users";
       const queryParams = `?email=${email}&password=${password}`;
       const url = baseUrl + queryParams;
 
-      // Send a GET request with the constructed URL
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -24,7 +22,6 @@ export default function LoginScreen({ navigation }) {
       const data = await response.json();
 
       if (data && data.data && data.data.length > 0) {
-        // Assuming the response contains an array
         for (let i = 0; i < data.data.length; i++) {
           const user = data.data[i];
           const userid = user.id;
@@ -40,7 +37,6 @@ export default function LoginScreen({ navigation }) {
               ["fullname", fullname.toString()],
             ];
 
-            // console.log(fullname)
             await AsyncStorage.multiSet(keyValues);
             navigation.navigate("Main");
           }

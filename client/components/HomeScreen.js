@@ -5,7 +5,6 @@ import {
   Button,
   FlatList,
   StyleSheet,
-  Image,
   Platform,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -35,17 +34,12 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   const renderProducts = ({ item }) => {
-    // const bb =
-    //   "http://192.168.29.24:1337" +
-    //   item.attributes.image.data.attributes.formats.small.url;
     return (
       <View style={styles.recipeItem} key={item.id}>
-        {/* <Image source={{ uri: bb }} style={styles.recipeImage} /> */}
         <Text style={styles.recipePrice}>Price: ${item.attributes.price}</Text>
         <Button
           title={item.attributes.productname}
           onPress={() => navigation.navigate("View", { recipe1: item.id })}
-          // onPress={() => handleAddToCart(item.id)}
         />
       </View>
     );
@@ -106,5 +100,6 @@ const styles = StyleSheet.create({
   },
   recipePrice: {
     fontSize: 16,
+    marginBottom: 10,
   },
 });

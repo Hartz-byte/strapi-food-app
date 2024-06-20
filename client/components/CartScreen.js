@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function CartScreen({ navigation }) {
   const [cartItems, setCartItems] = useState([]);
   const [cart, setCart] = useState([]);
-  // const [user, setUser] = useState();
+  const [user, setUser] = useState();
   const [cartList, setCartList] = useState([]);
 
   const fetchCartData = async () => {
@@ -13,8 +13,8 @@ export default function CartScreen({ navigation }) {
       const response = await fetch("http://192.168.29.24:1337/api/carts");
       const data = await response.json();
       if (data && data.data) {
-        // const userId = await AsyncStorage.getItem("userid");
-        // setUser(userId);
+        const userId = await AsyncStorage.getItem("userid");
+        setUser(userId);
         setCart(data.data);
       }
     } catch (error) {
@@ -43,13 +43,13 @@ export default function CartScreen({ navigation }) {
 
       const updatedCartList = [];
       for (let i = 0; i < cart.length; i++) {
-        // if (cart[i].attributes.userid == user) {
+        if (cart[i].attributes.userid == user) {
           for (let a = 0; a < cartItems.length; a++) {
             if (cart[i].attributes.productid == cartItems[a].id) {
               updatedCartList.push(cartItems[a]);
             }
           }
-        // }
+        }
       }
       setCartList(updatedCartList);
     };

@@ -10,15 +10,13 @@ export default function AboutScreen({ navigation }) {
 
   const handleRegister = async () => {
     try {
-      // Define the registration data
       const registrationData = {
-        username: fullName,
+        fullname: fullName,
         email: email,
         password: password,
         city: country,
         state: state,
       };
-      // "http://192.168.29.24:1337/api/auth/local/register",
 
       const response = await fetch(
         "http://192.168.29.24:1337/api/register-users",

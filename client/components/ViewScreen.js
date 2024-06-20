@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -76,14 +69,6 @@ export default function ViewScreen({ route, navigation }) {
     <View style={styles.container}>
       {recipe ? (
         <React.Fragment>
-          {/* <Image
-            source={{
-              uri:
-                "http://192.168.29.24:1337" +
-                recipe.image.data.attributes.formats.small.url,
-            }}
-            style={styles.recipeImage}
-          /> */}
           <Text style={styles.recipeName}>{recipe.productname}</Text>
           <Text style={styles.recipePrice}>Price: ${recipe.price}</Text>
         </React.Fragment>
@@ -121,6 +106,7 @@ const styles = StyleSheet.create({
   recipeName: {
     fontSize: 18,
     fontWeight: "bold",
+    marginBottom: 10,
   },
   recipePrice: {
     fontSize: 16,
@@ -132,6 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#007bff",
     padding: 10,
     borderRadius: 5,
+    marginBottom: 10,
   },
   addToCartButtonText: {
     color: "white",

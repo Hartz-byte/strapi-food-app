@@ -10,7 +10,7 @@ export default function CartScreen({ navigation }) {
 
   const fetchCartData = async () => {
     try {
-      const response = await fetch("http://localhost:1337/api/carts");
+      const response = await fetch("http://192.168.29.24:1337/api/carts");
       const data = await response.json();
       if (data && data.data) {
         const userId = await AsyncStorage.getItem("userId");
@@ -24,7 +24,9 @@ export default function CartScreen({ navigation }) {
 
   const fetchCartItems = async () => {
     try {
-      const response = await fetch("http://localhost:1337/api/products?populate=*");
+      const response = await fetch(
+        "http://192.168.29.24:1337/api/products?populate=*"
+      );
       const data = await response.json();
       if (data && data.data) {
         setCartItems(data.data);
@@ -53,7 +55,6 @@ export default function CartScreen({ navigation }) {
     };
 
     fetchData();
-
   }, [cart]);
 
   const calculateTotalPrice = () => {
@@ -70,15 +71,26 @@ export default function CartScreen({ navigation }) {
       {cartList.map((item) => (
         <View style={styles.cartItem} key={item.id}>
           <View style={styles.horizontalContainer}>
-            <Image source={{ uri: "http://localhost:1337" + item.attributes.image.data.attributes.formats.small.url }} style={styles.itemImage} />
+            {/* <Image
+              source={{
+                uri:
+                  "http://192.168.29.24:1337" +
+                  item.attributes.image.data.attributes.formats.small.url,
+              }}
+              style={styles.itemImage}
+            /> */}
             <View style={styles.productDetails}>
               <Text style={styles.itemName}>{item.attributes.productname}</Text>
-              <Text style={styles.itemPrice}>Price: ${item.attributes.price}</Text>
+              <Text style={styles.itemPrice}>
+                Price: ${item.attributes.price}
+              </Text>
             </View>
           </View>
         </View>
       ))}
-      <Text style={styles.totalPrice}>Total Price: ${calculateTotalPrice()}</Text>
+      <Text style={styles.totalPrice}>
+        Total Price: ${calculateTotalPrice()}
+      </Text>
     </View>
   );
 }

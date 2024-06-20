@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, FlatList, StyleSheet, Image, Platform } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  StyleSheet,
+  Image,
+  Platform,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-export default function HomeScreen({  navigation }) {
+export default function HomeScreen({ navigation }) {
   const [products, setProducts] = useState([]);
-  
+  // "http://192.168.29.24:1337/api/products?populate=*"
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch("http://localhost:1337/api/products?populate=*");
+        const response = await fetch(
+          "http://192.168.29.24:1337/api/products?populate=*"
+        );
         const data = await response.json();
 
         if (data && data.data) {
-            const userId = await AsyncStorage.getItem("userId");
+          const userId = await AsyncStorage.getItem("userId");
           setProducts(data.data);
         }
       } catch (error) {
@@ -23,14 +33,16 @@ export default function HomeScreen({  navigation }) {
   }, []);
 
   const renderProducts = ({ item }) => {
-    const bb = "http://localhost:1337" + item.attributes.image.data.attributes.formats.small.url;
+    // const bb =
+    //   "http://192.168.29.24:1337" +
+    //   item.attributes.image.data.attributes.formats.small.url;
     return (
       <View style={styles.recipeItem} key={item.id}>
-        <Image source={{ uri: bb }} style={styles.recipeImage} />
+        {/* <Image source={{ uri: bb }} style={styles.recipeImage} /> */}
         <Text style={styles.recipePrice}>Price: ${item.attributes.price}</Text>
         <Button
           title={item.attributes.productname}
-          onPress={() => navigation.navigate("View", { recipe1: item.id})}
+          onPress={() => navigation.navigate("View", { recipe1: item.id })}
         />
       </View>
     );

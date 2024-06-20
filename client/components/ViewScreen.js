@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ViewScreen({ route, navigation }) {
-  const { recipe1 } = route.params; 
+  const { recipe1 } = route.params;
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
     async function fetchRecipe() {
       try {
-        const response = await fetch(`http://localhost:1337/api/products/${recipe1}?populate=*`);
+        const response = await fetch(
+          `http://192.168.29.24:1337/api/products/${recipe1}?populate=*`
+        );
         const data = await response.json();
         if (data && data.data) {
           setRecipe(data.data.attributes);
@@ -25,7 +34,7 @@ export default function ViewScreen({ route, navigation }) {
 
   // Function to handle adding the recipe to the cart
   const handleAddToCart = async () => {
-    console.log(recipe1)
+    console.log(recipe1);
     if (recipe) {
       const userId = await AsyncStorage.getItem("userId");
       const payload = {
@@ -34,7 +43,7 @@ export default function ViewScreen({ route, navigation }) {
       };
 
       try {
-        const response = await fetch("http://localhost:1337/api/carts", {
+        const response = await fetch("http://192.168.29.24:1337/api/carts", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -58,7 +67,14 @@ export default function ViewScreen({ route, navigation }) {
     <View style={styles.container}>
       {recipe ? (
         <React.Fragment>
-          <Image source={{ uri: "http://localhost:1337" + recipe.image.data.attributes.formats.small.url }} style={styles.recipeImage} />
+          {/* <Image
+            source={{
+              uri:
+                "http://192.168.29.24:1337" +
+                recipe.image.data.attributes.formats.small.url,
+            }}
+            style={styles.recipeImage}
+          /> */}
           <Text style={styles.recipeName}>{recipe.productname}</Text>
           <Text style={styles.recipePrice}>Price: ${recipe.price}</Text>
         </React.Fragment>
@@ -67,7 +83,10 @@ export default function ViewScreen({ route, navigation }) {
       )}
 
       {/* Add to Cart Button */}
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
+      <TouchableOpacity
+        style={styles.addToCartButton}
+        onPress={handleAddToCart}
+      >
         <FontAwesome name="shopping-cart" size={24} color="white" />
         <Text style={styles.addToCartButtonText}>Add to Cart</Text>
       </TouchableOpacity>

@@ -27,7 +27,7 @@ export default function LoginScreen({ navigation }) {
         // Assuming the response contains an array
         for (let i = 0; i < data.data.length; i++) {
           const user = data.data[i];
-          const userId = user.id; // Get the user ID
+          const userid = user.id;
           const email2 = user.attributes.email;
           const fullname = user.attributes.fullname;
           const password2 = user.attributes.password;
@@ -35,7 +35,7 @@ export default function LoginScreen({ navigation }) {
 
           if (email == email2 && password == password2) {
             const keyValues = [
-              ["userId", userId.toString()],
+              ["userid", userid.toString()],
               ["email", email2.toString()],
               ["fullname", fullname.toString()],
             ];

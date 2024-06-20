@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ViewScreen({ route, navigation }) {
   const { recipe1 } = route.params;
-  const [recipe, setRecipe] = useState(null);
+  let [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
     async function fetchRecipe() {
@@ -22,6 +22,7 @@ export default function ViewScreen({ route, navigation }) {
         );
         const data = await response.json();
         if (data && data.data) {
+          // console.log("attributes data: ", data.data.attributes);
           setRecipe(data.data.attributes);
         }
       } catch (error) {
@@ -34,13 +35,20 @@ export default function ViewScreen({ route, navigation }) {
 
   // Function to handle adding the recipe to the cart
   const handleAddToCart = async () => {
-    console.log(recipe1);
+    console.log("recipe1: ", recipe1);
     if (recipe) {
-      const userId = await AsyncStorage.getItem("userId");
-      const payload = {
-        userid: userId,
-        productid: recipe1, // Adjust this as needed based on your data structure
+      const userid = await AsyncStorage.getItem("userid");
+      console.log("userid: ", userid);
+
+      let payload = {
+        data: {
+          productid: recipe1,
+          userid: userid,
+        },
       };
+      let data = payload.data;
+      console.log("payload: ", payload);
+      console.log("recipe: ", recipe);
 
       try {
         const response = await fetch("http://192.168.29.24:1337/api/carts", {
@@ -48,8 +56,9 @@ export default function ViewScreen({ route, navigation }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ data: payload }),
+          body: JSON.stringify({ data: data }),
         });
+        console.log("response: " + JSON.stringify(response));
 
         if (response.ok) {
           alert(`Added "${recipe.productname}" to the cart`);
@@ -58,7 +67,7 @@ export default function ViewScreen({ route, navigation }) {
           console.error("Error adding to cart. Please try again.");
         }
       } catch (error) {
-        console.error("Error adding to cart:", error);
+        console.error("Error adding to cart: ", error);
       }
     }
   };

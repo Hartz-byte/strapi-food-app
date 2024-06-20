@@ -11,7 +11,8 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function HomeScreen({ navigation }) {
   const [products, setProducts] = useState([]);
-  // "http://192.168.29.24:1337/api/products?populate=*"
+
+  let userId;
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -21,8 +22,9 @@ export default function HomeScreen({ navigation }) {
         const data = await response.json();
 
         if (data && data.data) {
-          const userId = await AsyncStorage.getItem("userId");
+          userId = await AsyncStorage.getItem("userId");
           setProducts(data.data);
+          console.log("data: ", data.data);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -43,6 +45,7 @@ export default function HomeScreen({ navigation }) {
         <Button
           title={item.attributes.productname}
           onPress={() => navigation.navigate("View", { recipe1: item.id })}
+          // onPress={() => handleAddToCart(item.id)}
         />
       </View>
     );

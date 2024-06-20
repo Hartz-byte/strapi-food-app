@@ -12,14 +12,14 @@ export default function AboutScreen({ navigation }) {
     try {
       // Define the registration data
       const registrationData = {
-        fullname: fullName,
+        username: fullName,
         email: email,
         password: password,
         city: country,
         state: state,
       };
+      // "http://192.168.29.24:1337/api/auth/local/register",
 
-      // Send a POST request to the registration endpoint
       const response = await fetch(
         "http://192.168.29.24:1337/api/register-users",
         {
@@ -30,17 +30,14 @@ export default function AboutScreen({ navigation }) {
           body: JSON.stringify({ data: registrationData }),
         }
       );
-      console.log(response);
+      // console.log("response: ", response);
       if (response.ok) {
-        // Registration successful, navigate to the login screen
         navigation.navigate("Login");
       } else {
-        // Handle the case where registration is unsuccessful
         console.error("Registration failed");
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      // Handle the error, e.g., display an error message
     }
   };
 
